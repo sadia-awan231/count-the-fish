@@ -28,6 +28,19 @@ const levelsData = [
     { image: Fish3, count: 2 },
   ],
   [
+    { image: Fish1, count: 1 },
+    { image: Fish2, count: 1 },
+    { image: Fish3, count: 1 },
+    { image: Fish4, count: 1 },
+  ],
+  [
+    { image: Fish1, count: 2 },
+    { image: Fish2, count: 1 },
+    { image: Fish3, count: 1 },
+    { image: Fish4, count: 2 },
+    { image: Fish5, count: 1 },
+  ],
+  [
     { image: Fish1, count: 3 },
     { image: Fish2, count: 3 },
     { image: Fish3, count: 3 },
@@ -37,7 +50,6 @@ const levelsData = [
     { image: Fish7, count: 3 },
     { image: Fish8, count: 3 },
   ],
-  // Add more levels as needed
 ];
 
 // Helper function to generate random positions
@@ -53,19 +65,20 @@ function Game() {
   const [correctFlags, setCorrectFlags] = useState({});
   const [message, setMessage] = useState("");
   const [fishPositions, setFishPositions] = useState([]);
-  const [score, setScore] = useState(0); // Score state
-  const [time, setTime] = useState(0); // Time state
-  const [wrongGuesses, setWrongGuesses] = useState(0); // Wrong guesses state
+  const [score, setScore] = useState(0);
+  const [time, setTime] = useState(0);
+  const [wrongGuesses, setWrongGuesses] = useState(0);
+  const [maxWrongGuesses, setMaxWrongGuesses] = useState(5); // Set max wrong guesses
 
   // Timer: Increment time every second
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => prevTime + 1);
     }, 1000);
-    return () => clearInterval(timer); // Clear the timer when the component unmounts
+    return () => clearInterval(timer);
   }, []);
 
-  // Initialize userCounts, correctFlags, and fishPositions when the component mounts or level changes
+  // Initialize counts, flags, and positions when level changes
   useEffect(() => {
     if (level <= levelsData.length) {
       const currentLevelData = levelsData[level - 1];
@@ -80,10 +93,11 @@ function Game() {
       setUserCounts(initialCounts);
       setCorrectFlags(initialFlags);
       setMessage("");
+      setWrongGuesses(0); // Reset wrong guesses for the new level
 
       // Define max width and height for the fish positions
-      const maxLeft = 80; // Adjust based on the desired width of the fish area
-      const maxTop = 80; // Adjust based on the desired height of the fish area
+      const maxLeft = 80;
+      const maxTop = 80;
 
       // Generate positions for the current level
       const positions = currentLevelData.flatMap((fish, index) =>
@@ -96,7 +110,7 @@ function Game() {
       );
 
       setFishPositions(positions);
-      setTime(0); // Reset the timer when the level changes
+      setTime(0);
     }
   }, [level]);
 
@@ -106,7 +120,6 @@ function Game() {
     const correctCount = currentLevelData[index].count;
     const isCorrect = parseInt(value, 10) === correctCount;
 
-    // Update userCounts and correctFlags
     setUserCounts((prevCounts) => ({
       ...prevCounts,
       [index]: value,
@@ -117,12 +130,10 @@ function Game() {
       [index]: isCorrect,
     }));
 
-    // Update wrong guesses count if the input is incorrect
     if (!isCorrect && value !== "") {
       setWrongGuesses((prevWrongGuesses) => prevWrongGuesses + 1);
     }
 
-    // Immediately check if all counts are correct
     const allCorrect = currentLevelData.every((fish, i) => {
       const currentValue = i === index ? value : userCounts[i];
       return parseInt(currentValue, 10) === fish.count;
@@ -130,17 +141,30 @@ function Game() {
 
     if (allCorrect && value !== "") {
       setMessage(`🎉 Congratulations! Level ${level} completed.`);
-      setScore((prevScore) => prevScore + 10); // Add 10 points for completing a level
-
-      // Proceed to the next level after a short delay
+      setScore((prevScore) => prevScore + 10); // Add score for level completion
       setTimeout(() => {
         if (level < levelsData.length) {
           setLevel((prevLevel) => prevLevel + 1);
         } else {
           setMessage("🏆 Awesome! You have completed all levels.");
         }
-      }, 1500); // 1.5-second delay before proceeding to the next level
+      }, 1500);
     }
+
+    // Game over condition
+    if (wrongGuesses + 1 >= maxWrongGuesses) {
+      setMessage("💔 Game Over! You've exceeded the maximum wrong guesses.");
+      setLevel(1); // Reset to level 1
+      setScore(0); // Reset score
+    }
+  };
+
+  const handleRestart = () => {
+    setLevel(1);
+    setScore(0);
+    setWrongGuesses(0);
+    setMessage("");
+    setTime(0);
   };
 
   return (
@@ -150,7 +174,7 @@ function Game() {
         <h2>Level: {level}</h2>
         <h2>Score: {score}</h2>
         <h2>Time: {time} seconds</h2>
-        <h2>Wrong guesses: {wrongGuesses}</h2> {/* Display wrong guesses */}
+        <h2>Wrong guesses: {wrongGuesses} / {maxWrongGuesses}</h2>
       </div>
       <div className="rectangle">
         <div
@@ -172,7 +196,7 @@ function Game() {
                 left: `${fish.x}%`,
                 top: `${fish.y}%`,
                 position: "absolute",
-                width: "70px", // Adjust size as needed
+                width: "70px",
                 height: "70px",
               }}
             />
@@ -205,25 +229,26 @@ function Game() {
                   value={userCounts[index]}
                   onChange={(event) => handleChange(index, event)}
                   className="count-input"
-                  style={{
-                    width: "60px",
-                    padding: "5px",
-                    marginTop: "10px",
-                    textAlign: "center",
-                  }}
+                  style={{ width: "50px", margin: "5px" }}
                 />
-                <span className="feedback" style={{ display: "block", marginTop: "5px" }}>
-                  {correctFlags[index] === true && "✔️"}
-                  {correctFlags[index] === false && "❌"}
-                </span>
+                {correctFlags[index] !== null && (
+                  <div
+                    className={`feedback ${
+                      correctFlags[index] ? "correct" : "incorrect"
+                    }`}
+                  >
+                    {correctFlags[index] ? "✔️" : "❌"}
+                  </div>
+                )}
               </div>
             ))}
           </div>
-          {message && <div className="message" style={{ marginTop: "20px", fontSize: "18px" }}>{message}</div>}
+          {message && <div className="message">{message}</div>}
+          <button onClick={handleRestart} className="restart-button">Restart Game</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default Game;  
+export default Game;
