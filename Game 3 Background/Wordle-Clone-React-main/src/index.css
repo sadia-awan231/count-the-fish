@@ -1,0 +1,33 @@
+/* Ensure the body, html, and root take full height of the screen */
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Ensure no scrollbars if not needed */
+  }
+  
+  /* Background covers the entire viewport, no matter what */
+  .background {
+    position: fixed; /* Keeps the background fixed in place */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    z-index: 0; /* Ensure it stays behind everything */
+    background-size: cover; /* Make sure the background image covers the whole area */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent tiling of the background image */
+  }
+  
+  /* Game component on top of the background */
+  .game {
+    position: relative;
+    z-index: 1; /* Game stays in front */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

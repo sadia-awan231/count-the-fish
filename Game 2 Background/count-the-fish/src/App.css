@@ -1,0 +1,143 @@
+/* src/App.css */
+
+body, html, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.app {
+  background-color: pink;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rectangle {
+  width: 70%;
+  height: 70%;
+  display: flex;
+}
+
+.left-side {
+  background-color: rgba(243, 229, 27, 0.381);
+  width: 60%;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.right-side {
+  background-color: rgb(232, 187, 38);
+  width: 40%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: calc(50% - 20px); /* Adjust width to fit 4 boxes */
+}
+
+.box-image {
+  width: 50px;
+  height: auto;
+}
+
+.count-input {
+  width: 50px;
+  text-align: center;
+  border: 2px solid gray;
+  padding: 5px;
+}
+
+.feedback {
+  font-size: 20px;
+  width: 30px;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: green;
+}
+
+/* Fish animation for the left side remains the same */
+.fish {
+  position: absolute;
+  max-width: 10%;
+  animation: swim 15s linear infinite;
+}
+
+@keyframes swim {
+  0% {
+    transform: translateY(0) translateX(100%);
+  }
+  50% {
+    transform: translateY(-20px) translateX(50%);
+  }
+  100% {
+    transform: translateY(0) translateX(-100%);
+  }
+}
+
+.fish-1 {
+  top: 10%;
+  left: 20%;
+  animation-duration: 18s;
+}
+
+.fish-2 {
+  top: 30%;
+  left: 70%;
+  animation-duration: 14s;
+}
+
+.fish-3 {
+  top: 60%;
+  left: 40%;
+  animation-duration: 20s;
+}
+
+.fish-4 {
+  top: 50%;
+  left: 80%;
+  animation-duration: 22s;
+}
+
+.fish-5 {
+  top: 20%;
+  left: 10%;
+  animation-duration: 16s;
+}
+
+.fish-6 {
+  top: 70%;
+  left: 30%;
+  animation-duration: 24s;
+}
+
+.fish-7 {
+  top: 40%;
+  left: 50%;
+  animation-duration: 26s;
+}
+
+.fish-8 {
+  top: 80%;
+  left: 60%;
+  animation-duration: 28s;
+}
