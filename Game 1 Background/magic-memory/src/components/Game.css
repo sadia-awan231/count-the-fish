@@ -39,11 +39,11 @@ button:hover{
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(231, 66, 145, 0.8);
   color: white;
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: center;
   z-index: 1000;
+  background-color: rgba(47, 7, 70, 0.8);
 }
