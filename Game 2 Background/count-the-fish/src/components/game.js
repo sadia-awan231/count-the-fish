@@ -16,22 +16,16 @@ const levelsData = [
   [
     { image: Fish1, count: 1 },
     { image: Fish2, count: 1 },
+  ],
+  [
+    { image: Fish1, count: 1 },
+    { image: Fish2, count: 1 },
     { image: Fish3, count: 1 },
-    { image: Fish4, count: 1 },
-    { image: Fish5, count: 1 },
-    { image: Fish6, count: 1 },
-    { image: Fish7, count: 1 },
-    { image: Fish8, count: 1 },
   ],
   [
     { image: Fish1, count: 2 },
     { image: Fish2, count: 2 },
     { image: Fish3, count: 2 },
-    { image: Fish4, count: 2 },
-    { image: Fish5, count: 2 },
-    { image: Fish6, count: 2 },
-    { image: Fish7, count: 2 },
-    { image: Fish8, count: 2 },
   ],
   [
     { image: Fish1, count: 3 },
@@ -178,8 +172,8 @@ function Game() {
                 left: `${fish.x}%`,
                 top: `${fish.y}%`,
                 position: "absolute",
-                width: "50px", // Adjust size as needed
-                height: "50px",
+                width: "70px", // Adjust size as needed
+                height: "70px",
               }}
             />
           ))}

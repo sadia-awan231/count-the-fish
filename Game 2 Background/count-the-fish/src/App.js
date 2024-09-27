@@ -6,7 +6,6 @@ import WaveAnimation from './components/WavesAnimation.js';
 function App() {
   return (
     <div className="App">
-      
       <WaveAnimation />
       <Game />
     </div>

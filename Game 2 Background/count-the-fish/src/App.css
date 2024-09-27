@@ -6,7 +6,7 @@ body, html, #root {
 }
 
 .app {
-  background-color: pink;
+  background-color: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%),rgba(0, 0, 0, 0.8);
   height: 100vh;
   display: flex;
   justify-content: center;

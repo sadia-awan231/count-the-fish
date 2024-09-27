@@ -15,25 +15,25 @@ body, html, #root {
   text-align: center;
 }
 .header {
-  position: fixed; /* Fixes the header at the top of the screen */
-  top: 0; /* Aligns it to the top */
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%; /* Makes the header span the full width of the viewport */
-  background-color: #f3a3c4; /* Dark background color */
-  color: #ffffff; /* White text color */
-  display: flex; /* Flexbox for alignment */
-  justify-content: space-around; /* Distributes space evenly */
-  align-items: center; /* Vertically centers content */
-  padding: 10px 20px; /* Padding around the content */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index: 1000; /* Ensures the header is above other content */
-  font-family: 'Arial', sans-serif; /* Font family for the text */
+  width: 100%;
+  background-color: #1e1261;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: 'Arial', sans-serif;
 }
 
 .header h2 {
-  margin: 0; /* Removes default margin */
-  font-size: 18px; /* Adjusts font size */
-  font-weight: normal; /* Normal font weight */
+  margin: 0;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 .rectangle {
@@ -43,7 +43,7 @@ body, html, #root {
 }
 
 .left-side {
-  background-color: rgba(243, 229, 27, 0.381);
+  background-color: rgba(47, 49, 155, 0.381);
   width: 60%;
   position: relative;
   overflow: hidden;
@@ -101,7 +101,7 @@ body, html, #root {
 /* Adjusted fish animation and positioning for dynamic placement */
 .fish {
   position: absolute;
-  max-width: 10%;
+  max-width: 30%;
   animation: swim 15s linear infinite;
 }
 
