@@ -1,23 +1,36 @@
-/* Card Container */
 .card {
   position: relative;
   transform-origin: center center;
-  transform: scale(1); /* Default scale at 100% */
+  transform: scale(1);
   transition: transform 0.3s ease-in-out;
-  cursor: pointer; /* Makes it clear that the card is interactive */
-  z-index: 1; /* Ensure the card is above other elements when zoomed */
-  
+  cursor: pointer;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  perspective: 1000px;
+  margin:10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8dbdb;
+  border: 2px solid #000;
+  border-radius: 6px;
+  padding: 10px;
 }
 
-/* Card Image */
+
 .card img {
   display: block;
   width: 100%;
-  border: 2px solid #fff;
+  border: 2px solid #000;
   border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in;
+  backface-visibility: hidden;
+
 }
 
-/* Front of the Card (Picture) */
 .card .front {
   transform: rotateY(90deg);
   transition: transform 0.2s ease-in;
@@ -26,7 +39,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; /* Hide the back when the front is visible */
+  backface-visibility: hidden;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flipped .front {
@@ -34,11 +51,10 @@
   transition-delay: 0.2s;
 }
 
-/* Back of the Card (Cover) */
 .card .back {
   transition: transform 0.2s ease-in;
   transition-delay: 0.2s;
-  backface-visibility: hidden; /* Hide the front when the back is visible */
+  backface-visibility: hidden;
   transform: rotateY(0deg);
 }
 
@@ -47,20 +63,18 @@
   transition-delay: 0s;
 }
 
-/* Zooming functionality with specific limits */
 .card:hover {
-  transform: scale(1.1); /* Zoom in up to 110% on hover */
-  z-index: 10; /* Bring the card to the top when zoomed */
-}
-
-/* Class to zoom out the card to 75% */
-.card.zoomed-out {
-  transform: scale(0.75); /* Zoom out to 75% */
+  transform: scale(1.1);
   z-index: 10;
 }
 
-/* Class to zoom in the card to 110% */
+
+.card.zoomed-out {
+  transform: scale(0.75);
+  z-index: 10;
+}
+
 .card.zoomed-in {
-  transform: scale(1.1); /* Zoom in to 110% */
+  transform: scale(1.1);
   z-index: 10;
 }

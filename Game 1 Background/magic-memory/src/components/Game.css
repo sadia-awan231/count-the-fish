@@ -2,7 +2,7 @@
   max-width: 860px;
   margin: 40px auto;
   position: relative;
-  z-index: 2; /* Higher z-index to keep it in the front */
+  z-index: 2;
 }
 
 button{
@@ -14,18 +14,23 @@ button{
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
+  transition: background-color 0.3s;
 }
 
 .card-grid {
-  margin-top: 40px;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 860px;
 }
 
 button:hover{
   background-color: #c23866;
   color: #fff;
+
 }
 
 /* Add this to Game.css */
@@ -40,5 +45,5 @@ button:hover{
   border-radius: 10px;
   font-size: 1.5rem;
   text-align: center;
-  z-index: 1000; /* Ensure it's above other content */
+  z-index: 1000;
 }

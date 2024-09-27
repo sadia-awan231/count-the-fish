@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Game.css';
 import SingleCard from './SingleCard';
-import axios from 'axios';  // Add axios for API requests
+import axios from 'axios';
 import AnimatedBackground from './AnimatedBackground';
 import MusicComponent from './music.js';
 
@@ -142,7 +142,6 @@ const levels = [
 
 ];
 
-
 function Game() {
   const [level, setLevel] = useState(0);
   const [cards, setCards] = useState([]);
@@ -151,12 +150,12 @@ function Game() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
-  const [history, setHistory] = useState([]);  // State to hold session history
+  const [history, setHistory] = useState([]);
   const [time, setTime] = useState(0);
   const [levelTime, setLevelTime] = useState(0);
   const [levelStartTime, setLevelStartTime] = useState(Date.now());
   const [completionMessage, setCompletionMessage] = useState('');
-  const [transitioning, setTransitioning] = useState(false); // State to handle transitions
+  const [transitioning, setTransitioning] = useState(false);
 
   const shuffleCards = () => {
     const currentLevelCards = levels[level];
@@ -170,11 +169,18 @@ function Game() {
     setTurns(0);
     setLevelTime(0);
     setLevelStartTime(Date.now());
-    setTransitioning(false); // Allow transitions to occur after shuffling
+    setTransitioning(false);
   };
 
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
   };
 
   useEffect(() => {
@@ -194,29 +200,21 @@ function Game() {
     }
   }, [choiceOne, choiceTwo]);
 
-  const resetTurn = () => {
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setTurns((prevTurns) => prevTurns + 1);
-    setDisabled(false);
-  };
-
   useEffect(() => {
     if (cards.length && cards.every(card => card.matched)) {
       if (level < levels.length - 1) {
-        setTransitioning(true); // Prevent further transitions
+        setTransitioning(true);
         setCompletionMessage(`Level ${level + 1} Completed! Moving to Level ${level + 2}...`);
         setTimeout(() => {
           setLevel((prevLevel) => prevLevel + 1);
           setCompletionMessage('');
         }, 2000);
       } else {
-        saveSession();  // Save session when the game is completed
+        saveSession();
       }
     }
   }, [cards]);
 
-  // Save session function
   const saveSession = async () => {
     try {
       const response = await axios.post('/api/sessions', {
@@ -226,13 +224,12 @@ function Game() {
         duration: time,
         status: 'completed',
       });
-      setHistory([...history, response.data]);  // Append session data to history
+      setHistory([...history, response.data]);
     } catch (error) {
       console.error('Error saving session:', error);
     }
   };
 
-  // Fetch session history
   const fetchHistory = async () => {
     try {
       const response = await axios.get('/api/sessions');
@@ -243,27 +240,31 @@ function Game() {
   };
 
   useEffect(() => {
-    fetchHistory();  // Fetch history when the game loads
+    fetchHistory();
   }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => prevTime + 1);
       setLevelTime((prevLevelTime) => prevLevelTime + 1);
-
+  
       if (levelTime >= 60 && !cards.every(card => card.matched)) {
-        alert('Time is up! Restarting level...');
-        shuffleCards();
+        setCompletionMessage('Time is up! Restarting level...');
+        setTimeout(() => {
+          shuffleCards();
+          setCompletionMessage('');
+        }, 2000);
       }
     }, 1000);
-
+  
     return () => clearInterval(timer);
   }, [levelTime, cards]);
+  
 
   useEffect(() => {
     const delayBeforeShuffle = setTimeout(() => {
       shuffleCards();
-    }, 3000); // 3-second delay
+    }, 3000);
 
     return () => clearTimeout(delayBeforeShuffle);
   }, [level]);
@@ -271,14 +272,9 @@ function Game() {
   return (
     <div className="App">
       <MusicComponent />
-
       <AnimatedBackground level={level + 1} turns={turns} time={time} score={score} />
       <h1>Magic Match</h1>
       <button onClick={shuffleCards}>Restart Level</button>
-      <div className='score'>
-        <p>Level: {level + 1}</p>
-        <p>Score: {score}</p>
-      </div>
       <div className="card-grid">
         {cards.map(card => (
           <SingleCard
@@ -286,7 +282,7 @@ function Game() {
             card={card}
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled || transitioning} // Disable interaction during transitions
+            disabled={disabled || transitioning}
           />
         ))}
       </div>
